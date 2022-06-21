@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "/8WJ4/GA/XdqOTTR1mJ4HOChkyq3Q74oKUnth/84pIvcEL0nWPZYs7IVf/x/eNX7dHMNZZM5pe29wBjJF7MaNg==",
+  "success": true,
+  "projectFilePath": "/home/fred/Projetos/ToGit/lawyer-crud/API/API.csproj",
+  "expectedPackageFiles": [
+    "/home/fred/.nuget/packages/microsoft.extensions.apidescription.server/3.0.0/microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "/home/fred/.nuget/packages/microsoft.openapi/1.2.3/microsoft.openapi.1.2.3.nupkg.sha512",
+    "/home/fred/.nuget/packages/swashbuckle.aspnetcore/6.2.3/swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
+    "/home/fred/.nuget/packages/swashbuckle.aspnetcore.swagger/6.2.3/swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",
+    "/home/fred/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.2.3/swashbuckle.aspnetcore.swaggergen.6.2.3.nupkg.sha512",
+    "/home/fred/.nuget/packages/swashbuckle.aspnetcore.swaggerui/6.2.3/swashbuckle.aspnetcore.swaggerui.6.2.3.nupkg.sha512"
+  ],
+  "logs": []
+}
