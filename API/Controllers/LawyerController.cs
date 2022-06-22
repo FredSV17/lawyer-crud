@@ -18,28 +18,44 @@ public class LawyerController : ControllerBase
         lawyerRepository = new LawyerRepository(configuration);
     }
 
-    [HttpGet(Name = "GetLawyer")]
-    public string Get()
+    [HttpGet("{id}", Name = "GetLawyer")]
+    public Lawyer Get(int id)
     {
-        return "Get";
+        Lawyer lawyer = new Lawyer();
+        lawyer = lawyerRepository.FindByID(id);
+        return lawyer;
     }
 
-    [HttpGet("create", Name = "PostLawyer")]
-    public string Create()
+    [HttpGet("", Name = "ListLawyer")]
+    public IEnumerable<Lawyer> List()
     {
-        Lawyer lawyer = new Lawyer("José","joseemail.com");
+        List<Lawyer> lawyerList = new List<Lawyer>();
+        IEnumerable<Lawyer> IlawyerList = lawyerList;
+        IlawyerList = lawyerRepository.FindAll();
+        return IlawyerList;
+    }
+
+    [HttpPost("create", Name = "PostLawyer")]
+    public string Create(LawyerDTO lawyerDTO)
+    {
+        Lawyer lawyer = new Lawyer(lawyerDTO.Name,lawyerDTO.Email);
         lawyerRepository.Add(lawyer);
-        return "Create";
+        return "create";
     }
-    [HttpGet("edit", Name = "EditLawyer")]
-    public string Edit()
+    [HttpPut("edit/{id}", Name = "EditLawyer")]
+    public string Edit(int id,LawyerDTO lawyerDTO)
     {
-        return "Edit";
+        Lawyer lawyer = new Lawyer(id,lawyerDTO.Name,lawyerDTO.Email);
+        lawyerRepository.Update(lawyer);
+        return "update";
+
     }
-    [HttpDelete("delete", Name = "DeleteLawyer")]
-    public string Delete()
+    //TODO: Alterar Get's
+    [HttpDelete("remove/{id}", Name = "DeleteLawyer")]
+    public string Delete(int id)
     {
-        return "Delete";
+        lawyerRepository.Remove(id);
+        return "delete";
     }
 }
 

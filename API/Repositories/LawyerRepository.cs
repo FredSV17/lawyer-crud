@@ -39,9 +39,9 @@ namespace AspNetCoreDapper.Repositories
             using (IDbConnection dbConnection = new SqliteConnection(ConnectionString))
             {
                 string sQuery = "UPDATE Lawyer SET Name = @Name,"
-                            + " Email = @Email, Price= @Price" + " WHERE Id = @Id";
+                            + " Email = @Email" + " WHERE Id = @Id";
                 dbConnection.Open();
-                dbConnection.Query(sQuery, item);
+                dbConnection.Execute(sQuery, item);
             }
         }
         public override Lawyer FindByID(int id)
@@ -54,6 +54,18 @@ namespace AspNetCoreDapper.Repositories
                 return dbConnection.Query<Lawyer>(sQuery, new { Id = id }).FirstOrDefault();
             }
         }
+
+        public Lawyer FindByEmail(string email)
+        { 
+            using (IDbConnection dbConnection = new SqliteConnection(ConnectionString))
+            {
+                string sQuery = "SELECT * FROM Lawyer" 
+                            + " WHERE Email = @Email";
+                dbConnection.Open();
+                return dbConnection.Query<Lawyer>(sQuery, new { Email = email }).FirstOrDefault();
+            }
+        }
+
         public override IEnumerable<Lawyer> FindAll()
         { 
             using (IDbConnection dbConnection = new SqliteConnection(ConnectionString))
