@@ -6,7 +6,8 @@ using Dapper;
 using System.Data;
 using Microsoft.Data.Sqlite;
 using API.Models;
-
+using System.Web.Http;
+using System.Net;
 
 namespace API.Repositories
 {
@@ -18,8 +19,8 @@ namespace API.Repositories
         {
             using (IDbConnection dbConnection = new SqliteConnection(ConnectionString))
             {
-                string sQuery = "INSERT INTO Lawyer (Name, Email)"
-                                + " VALUES(@Name, @Email)";
+                string sQuery = "INSERT INTO Lawyer (Name, Email, CreatedAt)"
+                                + " VALUES(@Name, @Email,@CreatedAt)";
                 dbConnection.Open();
                 dbConnection.Execute(sQuery, item);
             }
@@ -66,12 +67,25 @@ namespace API.Repositories
             }
         }
 
-        public override IEnumerable<Lawyer> FindAll()
+        public override IEnumerable<Lawyer> FindAll(string orderBy="Name",string order="ASC")
         { 
             using (IDbConnection dbConnection = new SqliteConnection(ConnectionString))
             {
                 dbConnection.Open();
-                return dbConnection.Query<Lawyer>("SELECT * FROM Lawyer");
+                string queryString = "SELECT * FROM Lawyer ORDER BY " + orderBy + " " + order;
+
+                return dbConnection.Query<Lawyer>(queryString);
+            }
+        }
+
+        public IEnumerable<Lawyer> FindRecentLawyersCreated(int n=5)
+        {
+            using (IDbConnection dbConnection = new SqliteConnection(ConnectionString))
+            {
+                dbConnection.Open();
+                string queryString = "SELECT * FROM Lawyer ORDER BY CreatedAt DESC LIMIT " + n;
+
+                return dbConnection.Query<Lawyer>(queryString);
             }
         }
     }

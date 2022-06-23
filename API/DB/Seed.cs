@@ -28,7 +28,8 @@ namespace API.DB
                     CREATE TABLE IF NOT EXISTS [Lawyer] (
                         [Id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                         [Name] NVARCHAR(255) NOT NULL,
-                        [Email] NVARCHAR(255) NOT NULL
+                        [Email] NVARCHAR(255) NOT NULL,
+                        [CreatedAt] DATETIME NOT NULL
                     )");
                 _dbConnection.Close();
             }

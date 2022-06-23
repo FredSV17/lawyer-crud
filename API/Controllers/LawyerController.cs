@@ -32,19 +32,29 @@ public class LawyerController : ControllerBase
         return lawyer;
     }
 
-    [HttpGet(Name = "ListLawyer")]
-    public IEnumerable<Lawyer> List()
+    [HttpGet("{orderBy}/{order}",Name = "ListLawyer")]
+    public IEnumerable<Lawyer> List(string orderBy, string order)
     {
         List<Lawyer> lawyerList = new List<Lawyer>();
         IEnumerable<Lawyer> IlawyerList = lawyerList;
-        IlawyerList = lawyerRepository.FindAll();
+        IlawyerList = lawyerRepository.FindAll(orderBy,order);
+        return IlawyerList;
+    }
+
+    [HttpGet("recent/{id}",Name = "ListRecentLawyer")]
+    public IEnumerable<Lawyer> ListRecent(int id)
+    {
+        List<Lawyer> lawyerList = new List<Lawyer>();
+        IEnumerable<Lawyer> IlawyerList = lawyerList;
+        IlawyerList = lawyerRepository.FindRecentLawyersCreated(id);
         return IlawyerList;
     }
 
     [HttpPost("create", Name = "PostLawyer")]
     public void Create(LawyerDTO lawyerDTO)
     {
-        Lawyer lawyer = new Lawyer(lawyerDTO.Name,lawyerDTO.Email);
+        DateTime createdAt = DateTime.UtcNow;
+        Lawyer lawyer = new Lawyer(lawyerDTO.Name,lawyerDTO.Email,createdAt);
         if (lawyerRepository.FindByEmail(lawyerDTO.Email) == null){
             lawyerRepository.Add(lawyer);
         }else{
@@ -54,8 +64,10 @@ public class LawyerController : ControllerBase
     [HttpPut("edit/{id}", Name = "EditLawyer")]
     public void Edit(int id,LawyerDTO lawyerDTO)
     {
-        if (lawyerRepository.FindByID(id) != null){
-            Lawyer lawyer = new Lawyer(id,lawyerDTO.Name,lawyerDTO.Email);
+        Lawyer lawyer = new Lawyer();
+        lawyer = lawyerRepository.FindByID(id);
+        if (lawyer != null){
+            Lawyer editLawyer = new Lawyer(id,lawyerDTO.Name,lawyerDTO.Email,lawyer.CreatedAt);
             lawyerRepository.Update(lawyer);
         }else{
             throw new HttpResponseException(HttpStatusCode.UnprocessableEntity);
