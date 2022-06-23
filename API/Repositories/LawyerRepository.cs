@@ -5,10 +5,10 @@ using Microsoft.Extensions.Configuration;
 using Dapper;
 using System.Data;
 using Microsoft.Data.Sqlite;
-using AspNetCoreDapper.Models;
+using API.Models;
 
 
-namespace AspNetCoreDapper.Repositories
+namespace API.Repositories
 {
     public class LawyerRepository: AbstractRepository<Lawyer>
     {

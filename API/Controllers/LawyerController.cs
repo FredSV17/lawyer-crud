@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Dapper;
-using AspNetCoreDapper.Models;
-using AspNetCoreDapper.Repositories;
+using API.Models;
+using API.Repositories;
+using System.Web.Http;
+using System.Net;
+
 namespace API.Controllers;
 
 [ApiController]
@@ -23,10 +26,13 @@ public class LawyerController : ControllerBase
     {
         Lawyer lawyer = new Lawyer();
         lawyer = lawyerRepository.FindByID(id);
+        if (lawyer == null){
+            throw new HttpResponseException(HttpStatusCode.UnprocessableEntity);
+        }
         return lawyer;
     }
 
-    [HttpGet("", Name = "ListLawyer")]
+    [HttpGet(Name = "ListLawyer")]
     public IEnumerable<Lawyer> List()
     {
         List<Lawyer> lawyerList = new List<Lawyer>();
@@ -36,26 +42,35 @@ public class LawyerController : ControllerBase
     }
 
     [HttpPost("create", Name = "PostLawyer")]
-    public string Create(LawyerDTO lawyerDTO)
+    public void Create(LawyerDTO lawyerDTO)
     {
         Lawyer lawyer = new Lawyer(lawyerDTO.Name,lawyerDTO.Email);
-        lawyerRepository.Add(lawyer);
-        return "create";
+        if (lawyerRepository.FindByEmail(lawyerDTO.Email) == null){
+            lawyerRepository.Add(lawyer);
+        }else{
+            throw new HttpResponseException(HttpStatusCode.UnprocessableEntity);
+        }
     }
     [HttpPut("edit/{id}", Name = "EditLawyer")]
-    public string Edit(int id,LawyerDTO lawyerDTO)
+    public void Edit(int id,LawyerDTO lawyerDTO)
     {
-        Lawyer lawyer = new Lawyer(id,lawyerDTO.Name,lawyerDTO.Email);
-        lawyerRepository.Update(lawyer);
-        return "update";
+        if (lawyerRepository.FindByID(id) != null){
+            Lawyer lawyer = new Lawyer(id,lawyerDTO.Name,lawyerDTO.Email);
+            lawyerRepository.Update(lawyer);
+        }else{
+            throw new HttpResponseException(HttpStatusCode.UnprocessableEntity);
+        }
 
     }
-    //TODO: Alterar Get's
+
     [HttpDelete("remove/{id}", Name = "DeleteLawyer")]
-    public string Delete(int id)
+    public void Delete(int id)
     {
-        lawyerRepository.Remove(id);
-        return "delete";
+        if (lawyerRepository.FindByID(id) != null){
+            lawyerRepository.Remove(id);
+        }else{
+            throw new HttpResponseException(HttpStatusCode.UnprocessableEntity);
+        }
     }
 }
 

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 
-namespace AspNetCoreDapper.Repositories
+namespace API.Repositories
 {
     public abstract class AbstractRepository<T>
     {
@@ -10,7 +10,7 @@ namespace AspNetCoreDapper.Repositories
         protected string ConnectionString => _connectionString;
         public AbstractRepository(IConfiguration configuration){
             _connectionString = configuration.GetValue<string>("DBInfo:ConnectionString");
-            AspNetCoreDapper.DB.Seed.CreateDb(configuration);
+            API.DB.Seed.CreateDb(configuration);
 
         }
         
