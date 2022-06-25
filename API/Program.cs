@@ -1,6 +1,14 @@
-using Microsoft.Data.Sqlite;
+using MySql.Data.MySqlClient;
+using Dapper;
+using System.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
+using var connection = new MySqlConnection("Server=localhost; Port=3306; Database=lawyer_schema; Uid=root; Pwd=password;");
+
+var users = connection.Query<User>("Select id,name,email,password from Users;");
+
+Console.WriteLine(string.Join(Environment.NewLine, users.Select(u => $"{u.name}, {u.email}, {u.password}")));
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -9,6 +17,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
 
 
 // Configure the HTTP request pipeline.
@@ -30,3 +39,4 @@ app.MapControllers();
 
 app.Run();
 
+public record User(int id, string name, string email, string password);
