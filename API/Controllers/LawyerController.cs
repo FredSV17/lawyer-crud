@@ -68,7 +68,7 @@ public class LawyerController : ControllerBase
         lawyer = lawyerRepository.FindByID(id);
         if (lawyer != null){
             Lawyer editLawyer = new Lawyer(id,lawyerDTO.Name,lawyerDTO.Email,lawyer.CreatedAt);
-            lawyerRepository.Update(lawyer);
+            lawyerRepository.Update(editLawyer);
         }else{
             throw new HttpResponseException(HttpStatusCode.UnprocessableEntity);
         }

@@ -8,6 +8,7 @@ using Microsoft.Data.Sqlite;
 using API.Models;
 using System.Web.Http;
 using System.Net;
+using MySql.Data.MySqlClient;
 
 namespace API.Repositories
 {
@@ -17,40 +18,40 @@ namespace API.Repositories
 
         public override void Add(Lawyer item)
         {
-            using (IDbConnection dbConnection = new SqliteConnection(ConnectionString))
+            using (IDbConnection dbConnection = new MySqlConnection(ConnectionString))
             {
                 string sQuery = "INSERT INTO Lawyer (Name, Email, CreatedAt)"
-                                + " VALUES(@Name, @Email,@CreatedAt)";
+                                + " VALUES(@Name, @Email,@CreatedAt);";
                 dbConnection.Open();
                 dbConnection.Execute(sQuery, item);
             }
         }
         public override void Remove(int id)
         {
-            using (IDbConnection dbConnection = new SqliteConnection(ConnectionString))
+            using (IDbConnection dbConnection = new MySqlConnection(ConnectionString))
             {
                 string sQuery = "DELETE FROM Lawyer" 
-                            + " WHERE Id = @Id";
+                            + " WHERE Id = @Id;";
                 dbConnection.Open();
                 dbConnection.Execute(sQuery, new { Id = id });
             }
         }
         public override void Update(Lawyer item)
         {
-            using (IDbConnection dbConnection = new SqliteConnection(ConnectionString))
+            using (IDbConnection dbConnection = new MySqlConnection(ConnectionString))
             {
-                string sQuery = "UPDATE Lawyer SET Name = @Name,"
-                            + " Email = @Email" + " WHERE Id = @Id";
+                string sQuery = "UPDATE Lawyer SET Name = @Name," + " Email = @Email" + 
+                                " WHERE Id = @Id;";
                 dbConnection.Open();
                 dbConnection.Execute(sQuery, item);
             }
         }
         public override Lawyer FindByID(int id)
         { 
-            using (IDbConnection dbConnection = new SqliteConnection(ConnectionString))
+            using (IDbConnection dbConnection = new MySqlConnection(ConnectionString))
             {
                 string sQuery = "SELECT * FROM Lawyer" 
-                            + " WHERE Id = @Id";
+                            + " WHERE Id = @Id;";
                 dbConnection.Open();
                 return dbConnection.Query<Lawyer>(sQuery, new { Id = id }).FirstOrDefault();
             }
@@ -58,10 +59,10 @@ namespace API.Repositories
 
         public Lawyer FindByEmail(string email)
         { 
-            using (IDbConnection dbConnection = new SqliteConnection(ConnectionString))
+            using (IDbConnection dbConnection = new MySqlConnection(ConnectionString))
             {
                 string sQuery = "SELECT * FROM Lawyer" 
-                            + " WHERE Email = @Email";
+                            + " WHERE Email = @Email;";
                 dbConnection.Open();
                 return dbConnection.Query<Lawyer>(sQuery, new { Email = email }).FirstOrDefault();
             }
@@ -69,10 +70,10 @@ namespace API.Repositories
 
         public override IEnumerable<Lawyer> FindAll(string orderBy="Name",string order="ASC")
         { 
-            using (IDbConnection dbConnection = new SqliteConnection(ConnectionString))
+            using (IDbConnection dbConnection = new MySqlConnection(ConnectionString))
             {
                 dbConnection.Open();
-                string queryString = "SELECT * FROM Lawyer ORDER BY " + orderBy + " " + order;
+                string queryString = "SELECT * FROM Lawyer ORDER BY " + orderBy + " " + order + ";";
 
                 return dbConnection.Query<Lawyer>(queryString);
             }
@@ -80,10 +81,10 @@ namespace API.Repositories
 
         public IEnumerable<Lawyer> FindRecentLawyersCreated(int n=5)
         {
-            using (IDbConnection dbConnection = new SqliteConnection(ConnectionString))
+            using (IDbConnection dbConnection = new MySqlConnection(ConnectionString))
             {
                 dbConnection.Open();
-                string queryString = "SELECT * FROM Lawyer ORDER BY CreatedAt DESC LIMIT " + n;
+                string queryString = "SELECT * FROM Lawyer ORDER BY CreatedAt DESC LIMIT " + n + ";";
 
                 return dbConnection.Query<Lawyer>(queryString);
             }

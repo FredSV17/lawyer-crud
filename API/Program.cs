@@ -4,11 +4,11 @@ using System.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-using var connection = new MySqlConnection("Server=localhost; Port=3306; Database=lawyer_schema; Uid=root; Pwd=password;");
+// using var connection = new MySqlConnection("Server=localhost; Port=3306; Database=lawyer_schema; Uid=root; Pwd=password;");
 
-var users = connection.Query<User>("Select id,name,email,password from Users;");
+// var users = connection.Query<User>("Select id,name,email,password from Users;");
 
-Console.WriteLine(string.Join(Environment.NewLine, users.Select(u => $"{u.name}, {u.email}, {u.password}")));
+// Console.WriteLine(string.Join(Environment.NewLine, users.Select(u => $"{u.name}, {u.email}, {u.password}")));
 // Add services to the container.
 
 builder.Services.AddControllers();

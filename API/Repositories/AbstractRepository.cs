@@ -10,7 +10,7 @@ namespace API.Repositories
         protected string ConnectionString => _connectionString;
         public AbstractRepository(IConfiguration configuration){
             _connectionString = configuration.GetValue<string>("DBInfo:ConnectionString");
-            API.DB.Seed.CreateDb(configuration);
+            API.DB.Seed.CreateTables(configuration);
 
         }
         
