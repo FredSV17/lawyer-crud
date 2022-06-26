@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>API</name>
+    </assembly>
+    <members>
+        <member name="M:API.Controllers.LawyerController.Get(System.Int32)">
+            <summary>
+            Retorna um advogado.
+            </summary>
+            <remarks>
+            id : id do advogado no banco de dados
+            </remarks> 
+        </member>
+        <member name="M:API.Controllers.LawyerController.List(System.String,System.String)">
+            <summary>
+            Retorna uma lista de todos os advogados presentes no banco de dados.
+            </summary>
+            <remarks>
+            orderBy : qual parâmetro da tabela que será usada para a ordenação dos registros (Exemplo: "Name" retornará uma lista de advogados ordenados pelo nome).
+            order : como a lista será ordenada ("ASC" para retornar em ordem ascendente, "DESC" para retornar em ordem descendente)
+            </remarks> 
+        </member>
+        <member name="M:API.Controllers.LawyerController.ListRecent(System.Int32)">
+            <summary>
+            Retorna uma lista de n advogados. Essa lista mostra os advogados criados recentemente primeiro.
+            </summary>
+            <remarks>
+            n : Número que define quantos advogados serão retornados pela API.
+            </remarks> 
+        </member>
+        <member name="M:API.Controllers.LawyerController.Create(API.Models.LawyerDTO)">
+             <summary>
+             Cria um novo advogado no sistema.
+             </summary>
+             <remarks>
+             Exemplo de Body:
+            
+                 POST Lawyer/create
+                 {
+                    "Name": "Carlos",
+                    "Email": "carlos@teste.com"
+                 }
+            
+             </remarks>    
+        </member>
+        <member name="M:API.Controllers.LawyerController.Edit(System.Int32,API.Models.LawyerDTO)">
+             <summary>
+             Edita um advogado já presente no sistema.
+             </summary>
+             <remarks>
+             id : id do advogado no banco de dados
+             Exemplo de body:
+            
+                 POST Lawyer/create
+                 {
+                    "Name": "Carlos",
+                    "Email": "carlos@teste.com"
+                 }
+            
+             </remarks>    
+        </member>
+        <member name="M:API.Controllers.LawyerController.Delete(System.Int32)">
+            <summary>
+            Remove um advogado do banco de dados.
+            </summary>
+            <remarks>
+            id : id do advogado no banco de dados
+            </remarks> 
+        </member>
+        <member name="M:API.Controllers.UserController.CreateUser(API.Models.UserDTO)">
+             <summary>
+             Cria um novo usuário no sistema.
+             </summary>
+             <remarks>
+             Exemplo de Body:
+            
+                 POST Lawyer/create
+                 {
+                    "name": "User",
+                    "email": "user@teste.com"
+                    "password": "password"
+                 }
+            
+             </remarks>  
+        </member>
+        <member name="M:API.Controllers.UserController.TokenGen(API.Models.TokenGenDTO)">
+            <summary>
+            Gera um token Bearer para um usuário existente no sistema.
+            </summary>
+        </member>
+    </members>
+</doc>

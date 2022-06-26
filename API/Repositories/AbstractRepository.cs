@@ -18,6 +18,5 @@ namespace API.Repositories
         public abstract void Remove(int id);
         public abstract void Update(T item);
         public abstract T FindByID(int id);
-        public abstract IEnumerable<T> FindAll(string orderBy,string order);
     }
 } 

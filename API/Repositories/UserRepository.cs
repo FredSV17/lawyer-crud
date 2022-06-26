@@ -12,82 +12,68 @@ using MySql.Data.MySqlClient;
 
 namespace API.Repositories
 {
-    public class LawyerRepository: AbstractRepository<Lawyer>
+    public class UserRepository: AbstractRepository<User>
     {
-        public LawyerRepository(IConfiguration configuration): base(configuration) { }
+        public UserRepository(IConfiguration configuration): base(configuration) { }
 
-        public override void Add(Lawyer item)
-        {
+        public override void Add(User item){
             using (IDbConnection dbConnection = new MySqlConnection(ConnectionString))
             {
-                string sQuery = "INSERT INTO Lawyer (Name, Email, CreatedAt)"
-                                + " VALUES(@Name, @Email,@CreatedAt);";
+                string sQuery = "INSERT INTO Users (Name, Email, Password, Role)"
+                                + " VALUES(@Name, @Email,@Password, @Role);";
                 dbConnection.Open();
                 dbConnection.Execute(sQuery, item);
             }
         }
-        public override void Remove(int id)
-        {
+        public override void Remove(int id){
             using (IDbConnection dbConnection = new MySqlConnection(ConnectionString))
             {
-                string sQuery = "DELETE FROM Lawyer" 
+                string sQuery = "DELETE FROM Users" 
                             + " WHERE Id = @Id;";
                 dbConnection.Open();
                 dbConnection.Execute(sQuery, new { Id = id });
             }
         }
-        public override void Update(Lawyer item)
-        {
+        public override void Update(User item){
             using (IDbConnection dbConnection = new MySqlConnection(ConnectionString))
             {
-                string sQuery = "UPDATE Lawyer SET Name = @Name," + " Email = @Email" + 
+                string sQuery = "UPDATE Users SET Name = @Name," + " Email = @Email" + "Password = @Password" + 
                                 " WHERE Id = @Id;";
                 dbConnection.Open();
                 dbConnection.Execute(sQuery, item);
             }
         }
-        public override Lawyer FindByID(int id)
-        { 
+        public override User FindByID(int id){
             using (IDbConnection dbConnection = new MySqlConnection(ConnectionString))
             {
-                string sQuery = "SELECT * FROM Lawyer" 
+                string sQuery = "SELECT * FROM Users" 
                             + " WHERE Id = @Id;";
                 dbConnection.Open();
-                return dbConnection.Query<Lawyer>(sQuery, new { Id = id }).FirstOrDefault();
+                return dbConnection.Query<User>(sQuery, new { Id = id }).FirstOrDefault();
             }
         }
-
+        
         public Lawyer FindByEmail(string email)
         { 
             using (IDbConnection dbConnection = new MySqlConnection(ConnectionString))
             {
-                string sQuery = "SELECT * FROM Lawyer" 
+                string sQuery = "SELECT * FROM Users" 
                             + " WHERE Email = @Email;";
                 dbConnection.Open();
                 return dbConnection.Query<Lawyer>(sQuery, new { Email = email }).FirstOrDefault();
             }
         }
 
-        public IEnumerable<Lawyer> FindAll(string orderBy="Name",string order="ASC")
-        { 
-            using (IDbConnection dbConnection = new MySqlConnection(ConnectionString))
-            {
-                dbConnection.Open();
-                string queryString = "SELECT * FROM Lawyer ORDER BY " + orderBy + " " + order + ";";
-
-                return dbConnection.Query<Lawyer>(queryString);
-            }
-        }
-
-        public IEnumerable<Lawyer> FindRecentLawyersCreated(int n=5)
+        public User Get(string email, string password)
         {
             using (IDbConnection dbConnection = new MySqlConnection(ConnectionString))
             {
+                string sQuery = "SELECT * FROM Users" 
+                            + " WHERE Email = @Email AND Password = @Password;";
                 dbConnection.Open();
-                string queryString = "SELECT * FROM Lawyer ORDER BY CreatedAt DESC LIMIT " + n + ";";
-
-                return dbConnection.Query<Lawyer>(queryString);
+                return dbConnection.Query<User>(sQuery, new { Email = email, Password = password }).FirstOrDefault();
             }
         }
+
     }
 }
