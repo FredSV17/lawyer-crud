@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/fred/Projetos/ToGit/lawyer-crud/API/API.csproj": {}
+    "/home/fred/Projetos/lawyer-crud/API/API.csproj": {}
   },
   "projects": {
-    "/home/fred/Projetos/ToGit/lawyer-crud/API/API.csproj": {
+    "/home/fred/Projetos/lawyer-crud/API/API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/fred/Projetos/ToGit/lawyer-crud/API/API.csproj",
+        "projectUniqueName": "/home/fred/Projetos/lawyer-crud/API/API.csproj",
         "projectName": "API",
-        "projectPath": "/home/fred/Projetos/ToGit/lawyer-crud/API/API.csproj",
+        "projectPath": "/home/fred/Projetos/lawyer-crud/API/API.csproj",
         "packagesPath": "/home/fred/.nuget/packages/",
-        "outputPath": "/home/fred/Projetos/ToGit/lawyer-crud/API/obj/",
+        "outputPath": "/home/fred/Projetos/lawyer-crud/API/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/fred/.nuget/NuGet/NuGet.Config"
@@ -81,7 +81,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -93,7 +94,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.301/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.403/RuntimeIdentifierGraph.json"
         }
       }
     }
